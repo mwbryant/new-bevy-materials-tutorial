@@ -3,21 +3,16 @@
 #![allow(clippy::too_many_arguments)]
 
 use bevy::{
-    ecs::system::lifetimeless::Read,
     prelude::*,
     reflect::TypeUuid,
     render::{
         camera::ScalingMode,
-        render_asset::RenderAssets,
-        render_resource::{AsBindGroup, Buffer, ShaderRef},
+        render_resource::{AsBindGroup, ShaderRef},
         renderer::RenderQueue,
     },
     render::{
-        extract_component::ExtractComponent,
         extract_resource::{ExtractResource, ExtractResourcePlugin},
-        render_asset::*,
         render_resource::*,
-        renderer::*,
         Extract, RenderApp, RenderStage,
     },
     sprite::{Material2d, Material2dPlugin, MaterialMesh2dBundle, RenderMaterials2d},
@@ -28,17 +23,17 @@ pub const CLEAR: Color = Color::rgb(0.3, 0.3, 0.3);
 pub const HEIGHT: f32 = 900.0;
 pub const RESOLUTION: f32 = 16.0 / 9.0;
 
-#[derive(AsBindGroup, TypeUuid, Debug, Clone)]
-#[derive(AsBindGroup, Debug, Clone)]
-//#[uuid = "f690fdae-d598-45ab-8225-97e2a3f056e0"]
+//#[derive(AsBindGroup, TypeUuid, Debug, Clone)]
+#[derive(AsBindGroup, TypeUuid, Clone)]
+#[uuid = "f690fdae-d598-45ab-8225-97e2a3f056e0"]
 pub struct CoolMaterial {
-    //#[uniform(0)]
-    //color: Color,
-    //#[uniform(0)]
-    //time: f32,
-    //#[texture(1)]
-    //#[sampler(2)]
-    //image: Handle<Image>,
+    #[uniform(0)]
+    color: Color,
+    #[uniform(0)]
+    time: f32,
+    #[texture(1)]
+    #[sampler(2)]
+    image: Handle<Image>,
 }
 
 impl Material2d for CoolMaterial {
@@ -98,7 +93,19 @@ fn setup(
             transform: Transform::from_xyz(-0.6, 0.0, 0.0),
             ..default()
         })
-        .insert(Health { value: 0.7 });
+        .insert(Health { value: 0.2 });
+    commands
+        .spawn_bundle(MaterialMesh2dBundle {
+            mesh: mesh_assets.add(Mesh::from(shape::Quad::default())).into(),
+            material: my_material_assets.add(CoolMaterial {
+                color: Color::rgb(0.0, 1.0, 0.3),
+                time: 0.0,
+                image: assets.load("awesome.png"),
+            }),
+            transform: Transform::from_xyz(0.6, 0.0, 0.0),
+            ..default()
+        })
+        .insert(Health { value: 0.8 });
 }
 
 struct ExtractedTime {
@@ -140,7 +147,7 @@ fn prepare_my_material(
                 let mut buffer = encase::UniformBuffer::new(Vec::new());
                 buffer
                     .write(&CoolMaterialUniformData {
-                        color: Color::WHITE,
+                        color: Color::rgb(health.value, 0.0, 0.0),
                         time: time.seconds_since_startup % 1.0,
                     })
                     .unwrap();

@@ -10,7 +10,7 @@ opt-level = 1
 opt-level = 3
 
 [dependencies]
-bevy = { git = "https://github.com/bevyengine/bevy", features = [
+bevy = { version = "0.8", features = [
     "bevy_gilrs",
     "bevy_winit",
     "render",

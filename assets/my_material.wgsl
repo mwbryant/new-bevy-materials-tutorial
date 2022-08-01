@@ -11,10 +11,6 @@ struct MyMat {
     time: f32,
 };
 
-struct Time {
-    time: f32,
-};
-
 @group(1) @binding(0)
 var<uniform> uniform_data: MyMat;
 @group(1) @binding(1)
@@ -24,7 +20,7 @@ var our_sampler: sampler;
 
 @fragment
 fn fragment(input: VertexOutput) -> @location(0) vec4<f32> {
-    var output_color = vec4<f32>(input.uv,uniform_data.time,1.0);
+    var output_color = vec4<f32>(uniform_data.time, 1.0, 1.0, 1.0);
     output_color = output_color * textureSample(texture, our_sampler, input.uv);
     output_color = output_color * uniform_data.color;
     return output_color;
