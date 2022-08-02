@@ -1,5 +1,5 @@
 [package]
-name = "bevy_template"
+name = "bevy_material_tutorial"
 version = "0.1.0"
 edition = "2021"
 

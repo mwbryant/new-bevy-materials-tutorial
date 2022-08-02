@@ -1,10 +1,9 @@
-# Bevy Tutorial Template
+# Bevy Material Tutorial
 
-A simple template to base [Bevy](https://bevyengine.org/) tutorials from. Creates a window, adds common dependancies, and sets up debugging utils.
+The source code to go along with the Bevy 0.8 New Materials Video on the LogicProjects Youtube Channel
 
 # Usage
 
 ```
-cargo install cargo-generate
-cargo generate --git https://github.com/mwbryant/logic_projects_bevy_template
+cargo run
 ```
