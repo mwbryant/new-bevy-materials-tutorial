@@ -10,17 +10,6 @@ opt-level = 1
 opt-level = 3
 
 [dependencies]
-bevy = { version = "0.8", features = [
-    "bevy_gilrs",
-    "bevy_winit",
-    "render",
-    "png",
-    "hdr",
-    "vorbis",
-    "x11",
-    "dynamic",
-    "filesystem_watcher",
-    "trace"
-     ] }
+bevy = { version = "0.9.1", features = ["dynamic"] }
 
 # cargo run --release --features bevy/trace,bevy/trace_chrome
